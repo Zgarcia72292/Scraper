@@ -36,7 +36,7 @@ app.use(routes);
 // Connect to the Mongo DB
 // mongoose.connect("mongodb://localhost/mongoheadline", { useNewUrlParser: true });
 
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/IMDBheadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://<dbuser>:<dbpassword>@ds157873.mlab.com:57873/heroku_ws70l2pg";
 
 mongoose.connect(MONGODB_URI);
 

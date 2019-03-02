@@ -60,6 +60,17 @@ app.delete("/articles/:id", function (req, res) {
   });
  });
 
+ app.delete("/articles/delete/:id", function (req, res) {
+
+  console.log("id:"+req.params.id);
+  db.Article.findByIdAndRemove(req.params.id, function (err) {
+    if (err)
+      res.send(err);
+    else
+      res.json({ message: 'Article Deleted!' });
+  });
+ });
+
   // Route for getting all Articles from the db
   app.get("/", function(req, res) {
     // Grab every document in the Articles collection
@@ -108,6 +119,31 @@ app.delete("/articles/:id", function (req, res) {
       });
   });
   
+  app.get("/savedarticles", function(req,res){
+    db.Article.find({saved: true})
+    .then(function(data){
+      var hbsObject ={
+        articles : data
+      };
+      res.render("saved", hbsObject);
+    })
+    .catch(function(err){
+      res.json(err);
+    });
+});
+
+  app.put("/articles/saved/:id", function(req, res){
+    db.Article.update({ _id: req.params.id }, 
+      { $set: {saved: true}}).then
+    (function(dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function(err) {
+      res.json(err);
+    });
+    });
+      
+      
   // Route for saving/updating an Article's associated Note
   app.post("/articles/:id", function(req, res) {
     // Create a new note and pass the req.body to the entry

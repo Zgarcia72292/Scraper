@@ -4,10 +4,39 @@ $.getJSON("/articles", function (data) {
  // For each one
  for (var i = 0; i < data.length; i++) {
   // Display the apropos information on the page
-  $("#articles").append("<button data-id='" + data[i]._id + "' class='deletebtn'>X</button><p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p>");
+  $("#articles").append("<button data-id='" + data[i]._id + "' class='deletebtn'>X</button><p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + data[i].link + "<br />" + data[i].summary + "</p></br><button data-id='" + data[i]._id + "' class='savebtn'>Save</button><br/>");
 }
 });
 
+
+
+$(document).on("click", ".savebtn", function(){
+  var thisId = $(this).attr("data-id");
+  $.ajax({
+    method: "PUT",
+    url: "/articles/saved/" + thisId,
+    data: {
+      saved: true
+    }
+  })
+  
+});
+
+$(document).on("click", ".deletesave", function () {
+ 
+  var thisId = $(this).attr("data-id");
+
+ 
+  $.ajax({
+    method: "DELETE",
+    url: "/articles/delete/" + thisId
+
+  })
+ 
+    .then(function (data) {
+      location.reload();
+    });
+  });
 
 // Whenever someone clicks a p tag
 $(document).on("click", "p", function () {

@@ -1,0 +1,18 @@
+<div id="wrapper">
+  <a href="/">Home</a>
+  <h1>Saved Articles</h1>
+ <ul>
+     {{#each articles}}
+     <div>
+       <br>
+        <br>
+        <br>
+        <p>{{title}}</p>
+        <p>{{link}}</p>
+        <p>{{summary}}</p>
+        
+        <button data-id={{_id}} class="deletesave">X</button>
+        </div>
+    {{/each}}
+ </ul>
+</div>
